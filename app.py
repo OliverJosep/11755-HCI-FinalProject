@@ -169,3 +169,23 @@ if st.button('💡 Predict Price', use_container_width=True):
                 This plot is an interesting tool to understand why the model predicted a certain house price. Each feature (like number of rooms, location, or garden) either increases or decreases the estimated price. Features shown in red pushed the price up, while those in blue pushed it down. The longer the bar, the greater the impact that feature had on the final prediction. This allows you to see which aspects of the house most influenced its value.</p>
     """, unsafe_allow_html=True)
 
+
+    st.subheader("🌍 Global Feature Importance")
+
+    # Simulate data for global SHAP
+    np.random.seed(42) # For reproducibility
+    dummy_data = pd.DataFrame(np.random.normal(size=(200, len(columns))), columns=columns)
+
+    # Compute global SHAP values
+    global_shap_values = explainer(dummy_data)
+
+    shap.summary_plot(global_shap_values, dummy_data, show=False)
+    st.pyplot(plt.gcf())
+
+    st.markdown("""
+        <p style='text-align: center; color: gray;'>
+        This summary plot shows the global importance of each feature used by the model to predict house prices. Each dot represents a prediction sample. Red points indicate high values of that feature, blue means low values. The horizontal axis shows the feature's effect on the predicted price. Features at the top are the most influential across all predictions.
+        </p>
+    """, unsafe_allow_html=True)
+
+
