@@ -43,8 +43,28 @@ ALLOWED_KEYS = [
     'loc_zone_Ibiza, Balears (Illes)', 'loc_zone_Mallorca, Balears (Illes)', 'loc_zone_Menorca, Balears (Illes)'
 ]
 
-cities = sorted([key.replace('loc_city_', '') for key in ALLOWED_KEYS if key.startswith('loc_city_')])
-zones = sorted([key.replace('loc_zone_', '') for key in ALLOWED_KEYS if key.startswith('loc_zone_')])
+zone_to_cities = {
+    'Mallorca, Balears (Illes)': [
+        'Alaró', 'Ariany', 'Bañalbufar', 'Binissalem', 'Buger', 'Bunyola', 'Cala Bona',
+        'Cala Millor', 'Cala Ratjada', 'Calvià', 'Campanet', 'Campos', 'Canyamel', 'Capdepera',
+        'Colonia de Sant Jordi', 'Consell', 'Costa de los Pinos', 'Costitx', 'Deya', 'Escorca',
+        'Esporles', 'Estellenchs', 'Felanitx', 'Fornalutx', 'Inca', 'Lloret de Vista Alegre',
+        'Lloseta', 'Llubi', 'Llucmajor', 'Manacor', 'Mancor de la Vall', 'Maria de la Salud',
+        'Marratxi', 'Montuiri', 'Muro', 'Palma de Mallorca', 'Palmanyola', 'Petra', 'Pobla (Sa)',
+        'Pollença', 'Porreres', 'Puigpunyent', 'Sa Coma', 'Sa Ràpita', 'Santa Eugenia',
+        'Santa Margalida', 'Santa Maria del Cami', 'Selva', 'Sencelles', 'Ses Salines (Mallorca)',
+        'Sineu', 'Soller', 'Son Carrio', 'Son Servera', 'Valldemossa', 'Villafranca de Bonany'
+    ],
+    'Ibiza, Balears (Illes)': [
+        'Eivissa', 'Portinax', 'San Rafael', 'San Vicente', 'Sant Antoni de Portmany',
+        'Sant Joan', 'Sant Joan de Labritja', 'Sant Josep de Sa Talaia', 'Santa Eulalia del Río'
+    ],
+    'Menorca, Balears (Illes)': [
+        'Es Mercadal', 'Es Migjorn Gran', 'Ferreries', 'Formentera', 'Maó/Mahon', 'Sant Lluis'
+    ]
+}
+
+
 types = sorted([key.replace('house_type_', '') for key in ALLOWED_KEYS if key.startswith('house_type_')])
 
 
@@ -63,13 +83,13 @@ st.markdown("""
 
 st.markdown("---")
 
-# 🔧 Inputs
+# Inputs
 st.subheader("📍 Location")
-# loc_city = st.selectbox('City:', ['Palma', 'Inca', 'Manacor', 'Llucmajor'])
-# loc_zone = st.selectbox('Zone:', ['Ibiza, Balears (Illes)'])  # Exemple
-# house_type = st.selectbox('Type of House:', ['Flat', 'House', 'Penthouse', 'Duplex'])
-loc_city = st.selectbox('City:', cities)
-loc_zone = st.selectbox('Zone:', zones)
+loc_zone = st.selectbox('Zone (Island):', sorted(zone_to_cities.keys()))
+
+filtered_cities = sorted(zone_to_cities.get(loc_zone, []))
+loc_city = st.selectbox('City:', filtered_cities)
+
 house_type = st.selectbox('Type of House:', types)
 
 st.markdown("---")
@@ -128,7 +148,7 @@ if st.button('💡 Predict Price', use_container_width=True):
         if key not in input_dict:
             input_dict[key] = 0
 
-    # Create DataFrame for input
+    # Create dataframe for input
     input_df = pd.DataFrame([input_dict])[ALLOWED_KEYS]
 
     input_scaled = scaler.transform(input_df)
@@ -143,31 +163,9 @@ if st.button('💡 Predict Price', use_container_width=True):
     shap.plots.waterfall(shap_values[0], show=False)
     st.pyplot(plt.gcf())
 
-# Footer
-footer = """
-<style>
-.footer {
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    background-color: var(--footer-bg-color, #f0f2f6);
-    padding: 10px;
-    text-align: center;
-    font-size: 0.9em;
-    color: var(--text-color, #888);
-    border-top: 1px solid #e6e6e6;
-}
-@media (prefers-color-scheme: dark) {
-    .footer {
-        background-color: #0e1117;
-        color: #aaa;
-        border-top: 1px solid #444;
-    }
-}
-</style>
-<div class="footer">
-    <p>&copy; 2025 - Made with ❤️ using Streamlit</p>
-</div>
-"""
-st.markdown(footer, unsafe_allow_html=True)
+
+    st.markdown("""
+        <p style='text-align: center; color: gray;'>
+                This plot is an interesting tool to understand why the model predicted a certain house price. Each feature (like number of rooms, location, or garden) either increases or decreases the estimated price. Features shown in red pushed the price up, while those in blue pushed it down. The longer the bar, the greater the impact that feature had on the final prediction. This allows you to see which aspects of the house most influenced its value.</p>
+    """, unsafe_allow_html=True)
+
