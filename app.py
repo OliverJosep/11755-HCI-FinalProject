@@ -57,10 +57,10 @@ zone_to_cities = {
     ],
     'Ibiza, Balears (Illes)': [
         'Eivissa', 'Portinax', 'San Rafael', 'San Vicente', 'Sant Antoni de Portmany',
-        'Sant Joan', 'Sant Joan de Labritja', 'Sant Josep de Sa Talaia', 'Santa Eulalia del Río'
+        'Sant Joan', 'Sant Joan de Labritja', 'Sant Josep de Sa Talaia', 'Santa Eulalia del Río', 'Formentera', 
     ],
     'Menorca, Balears (Illes)': [
-        'Es Mercadal', 'Es Migjorn Gran', 'Ferreries', 'Formentera', 'Maó/Mahon', 'Sant Lluis'
+        'Es Mercadal', 'Es Migjorn Gran', 'Ferreries', 'Maó/Mahon', 'Sant Lluis'
     ]
 }
 
