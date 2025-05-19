@@ -189,3 +189,19 @@ if st.button('💡 Predict Price', use_container_width=True):
     """, unsafe_allow_html=True)
 
 
+st.markdown("---")
+
+st.markdown("""
+### 🧠 How does the AI learn?
+
+The predictive model used in this application is trained using real housing data from the **Balearic Islands**, taken from the following open dataset:   [Spanish Housing Dataset – Kaggle](https://www.kaggle.com/datasets/thedevastator/spanish-housing-dataset-location-size-price-and?resource=download&select=houses_balears.csv)
+
+It learns by identifying patterns and relationships between **input features** (such as area, number of rooms, amenities, location, etc.) and the **final sale price** of each property.
+
+During training, the dataset was split into a training and a testing set. The model learned from thousands of real examples by adjusting its internal parameters to reduce the error between its predictions and the actual prices.
+
+This training process allows the model to **generalize** and make price predictions for new houses it has never seen before.
+
+As part of the improvements made to this project, we included **explainability tools** (SHAP and LIME) so that users can understand **which features most influenced each prediction**, making the AI’s decisions more transparent and trustworthy.
+
+""")
