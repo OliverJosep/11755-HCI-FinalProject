@@ -78,7 +78,7 @@ columns = joblib.load('columns.pkl')
 
 st.markdown("""
     <h1 style='text-align: center;'>🏠 House Price Prediction</h1>
-    <p style='text-align: center; color: gray;'>Estimate the price of a house based on its characteristics and location</p>
+    <p style='text-align: center; color: gray;'>Estimate the price of a house in the <bold>Balearic Islands</bold> based on its characteristics and location</p>
 """, unsafe_allow_html=True)
 
 st.markdown("---")
@@ -202,6 +202,6 @@ During training, the dataset was split into a training and a testing set. The mo
 
 This training process allows the model to **generalize** and make price predictions for new houses it has never seen before.
 
-As part of the improvements made to this project, we included **explainability tools** (SHAP and LIME) so that users can understand **which features most influenced each prediction**, making the AI’s decisions more transparent and trustworthy.
+As part of the improvements made to this project, we included **explainability tools** (SHAP) so that users can understand **which features most influenced each prediction**, making the AI’s decisions more transparent and trustworthy.
 
 """)
